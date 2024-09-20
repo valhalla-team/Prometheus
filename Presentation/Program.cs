@@ -1,6 +1,9 @@
+using Infrastructure;
 using Presentation.GraphQL;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddInfrastructureServices();
 
 builder.Services
     .AddGraphQLServer()

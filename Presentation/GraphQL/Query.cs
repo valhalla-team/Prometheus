@@ -1,24 +1,30 @@
-﻿namespace Presentation.GraphQL;
+﻿using Infrastructure.Services.GitHub;
 
-public class Query
+namespace Presentation.GraphQL;
+
+public class Query(GitHubGraphQLService gitHubGraphQLService)
 {
-    public UserViewer GetUser() =>
-        new UserViewer
+    private readonly GitHubGraphQLService _gitHubGraphQLService = gitHubGraphQLService;
+
+    public async Task<User> GetUser(int avatarSize = 152)
+    {
+        string query = $@"
+            query {{
+              user(login: ""bmsant"") {{
+                avatarUrl(size: {avatarSize})
+                bio
+                email
+                name
+              }}
+            }}";
+
+        var result = await _gitHubGraphQLService.QueryGitHubAsync<dynamic>(query);
+        return new User
         {
-            Login = "bmsant",
-            ProfileOwner = new ProfileOwner
-            {
-                Name = "Bruno Santos"
-            }
+            AvatarUrl = result.user.avatarUrl,
+            Bio = result.user.bio,
+            Email = result.user.email,
+            Name = result.user.name,
         };
-}
-public class UserViewer
-{
-    public string Login { get; set; }
-    public ProfileOwner ProfileOwner { get; set; }
-}
-
-public class ProfileOwner
-{
-    public string Name { get; set; }
+    }
 }
