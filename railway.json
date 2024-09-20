@@ -1,0 +1,8 @@
+{
+  "build": {
+    "dockerfilePath": "Presentation/Dockerfile"
+  },
+  "deploy": {
+    "command": "docker-compose up"
+  }
+}
