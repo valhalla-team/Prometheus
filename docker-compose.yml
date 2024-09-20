@@ -1,6 +1,8 @@
 services:
   presentation:
-    image: ${DOCKER_REGISTRY-}presentation
+    image: bmsant/prometheus:latest
     build:
       context: .
       dockerfile: Presentation/Dockerfile
+    environment:
+    - GITHUB_ACCESS_TOKEN
