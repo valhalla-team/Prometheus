@@ -15,6 +15,7 @@ public class Query(GitHubGraphQLService gitHubGraphQLService)
                 bio
                 email
                 name
+                location
               }}
             }}";
 
@@ -25,6 +26,7 @@ public class Query(GitHubGraphQLService gitHubGraphQLService)
             Bio = result.user.bio,
             Email = result.user.email,
             Name = result.user.name,
+            Location = result.user.location
         };
     }
 }
